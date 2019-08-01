@@ -1,0 +1,1 @@
+A shim for Lotus Domino SSJS to provide some additional javascript functions and objects/methods so that some other open source libraries could be used in the SSJS environment.  It is not a complete shim as only what was needed for the libraries I am trying to use were implemented.
