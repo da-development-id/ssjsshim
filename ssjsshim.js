@@ -4,16 +4,17 @@ thecontext.process = thecontext.process || {
 	env: {}
 };
 
-
-var logger = function(message) {
-	print((this ? '[' + this.toString().toUpperCase() + ']: ' : '') + message);
-};	
-thecontext.console = thecontext.console || {
-	debug : logger.bind('debug'),
-	error : logger.bind('error'),
-	info  : logger.bind('info'),
-	log   : logger.bind('log'),
-	warn  : logger.bind('warn')
+thecontext.JSON = thecontext.JSON || {
+	parse : function(value) {
+		if(/^\[.*\]$/.test(value)) {
+			return fromJson('{"value": ' + value + '}').value;
+		} else {
+			return fromJson(value);
+		}
+	},
+	stringify : function(object) {
+		return toJson(object);
+	}
 };
 	
 Array.isArray = function(object) {
@@ -144,21 +145,6 @@ Boolean.call = function(thisobject, value) {
 Date.now = function() {
 	return (new Date()).getTime();
 };
-
-thecontext.JSON = thecontext.JSON || {
-	parse : function(value) {
-		if(/^\[.*\]$/.test(value)) {
-			return fromJson('{"value": ' + value + '}').value;
-		} else {
-			return fromJson(value);
-		}
-	},
-	stringify : function(object) {
-		return toJson(object);
-	}
-};
-
-var Empty = function Empty() {};
 
 Function.prototype.bind = function(thisobject) {
 	var target = this;
@@ -305,4 +291,16 @@ String.prototype.replace = function(searchValue, replacer) {
 	
 	return replaced;
 };
+
+var logger = function(message) {
+	print((this ? '[' + this.toString().toUpperCase() + ']: ' : '') + message);
+};	
+thecontext.console = thecontext.console || {
+	debug : logger.bind('debug'),
+	error : logger.bind('error'),
+	info  : logger.bind('info'),
+	log   : logger.bind('log'),
+	warn  : logger.bind('warn')
+};
+
 })(this);
